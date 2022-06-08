@@ -29,9 +29,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PommAwareCommand extends Command
 {
-    private $pomm;
+    private ?Pomm $pomm = null;
 
-    protected $config_file;
+    protected string $config_file;
 
     /**
      * execute
@@ -40,9 +40,10 @@ class PommAwareCommand extends Command
      *
      * @see Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int|null
     {
         $this->config_file = $input->getOption('bootstrap-file');
+        return null;
     }
 
     /**
@@ -54,7 +55,7 @@ class PommAwareCommand extends Command
      * @access protected
      * @return PommAwareCommand $this
      */
-    protected function configureRequiredArguments()
+    protected function configureRequiredArguments(): PommAwareCommand
     {
         return $this;
     }
@@ -68,7 +69,7 @@ class PommAwareCommand extends Command
      * @access protected
      * @return PommAwareCommand $this
      */
-    protected function configureOptionals()
+    protected function configureOptionals(): PommAwareCommand
     {
         $this
             ->addOption(
@@ -88,7 +89,7 @@ class PommAwareCommand extends Command
      *
      * @see Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->configureRequiredArguments()
@@ -105,7 +106,7 @@ class PommAwareCommand extends Command
      * @return Pomm
      * @throws CliException
      */
-    protected function getPomm()
+    protected function getPomm(): Pomm
     {
         if ($this->pomm === null) {
             if (!file_exists($this->config_file)) {
@@ -132,7 +133,7 @@ class PommAwareCommand extends Command
      * @param  Pomm     $pomm
      * @return PommAwareCommand
      */
-    public function setPomm(Pomm $pomm)
+    public function setPomm(Pomm $pomm): PommAwareCommand
     {
         $this->pomm = $pomm;
 

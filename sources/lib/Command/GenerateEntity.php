@@ -34,7 +34,7 @@ class GenerateEntity extends RelationAwareCommand
      *
      * @see Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('pomm:generate:entity')
@@ -57,7 +57,7 @@ HELP
      *
      * @see PommAwareCommand
      */
-    protected function configureOptionals()
+    protected function configureOptionals(): GenerateEntity
     {
         parent::configureOptionals()
             ->addOption(
@@ -82,7 +82,7 @@ HELP
      *
      * @see Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         parent::execute($input, $output);
 

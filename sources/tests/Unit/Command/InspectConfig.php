@@ -35,9 +35,7 @@ class InspectConfig extends FoundationSessionAtoum
         };
 
         $pomm_mock->getMockController()->isDefaultSession = function ($name) {
-            if ($name == "my_db0") {
-                return true;
-            }
+            return $name == "my_db0";
         };
 
         return $pomm_mock;

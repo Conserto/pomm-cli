@@ -9,6 +9,8 @@
  */
 namespace PommProject\Cli\Command;
 
+use PommProject\Cli\Exception\CliException;
+use PommProject\Foundation\Exception\FoundationException;
 use PommProject\Foundation\ResultIterator;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,7 +34,7 @@ class InspectDatabase extends SessionAwareCommand
      *
      * @see Command
      */
-    public function configure()
+    public function configure(): void
     {
         $this
             ->setName('pomm:inspect:database')
@@ -45,16 +47,19 @@ class InspectDatabase extends SessionAwareCommand
     /**
      * execute
      *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     * @throws CliException
+     * @throws FoundationException
      * @see Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         parent::execute($input, $output);
-        $info = $this
-            ->getSession()
-            ->getInspector()
-            ->getSchemas()
-            ;
+
+        $session = $this->mustBeModelManagerSession($this->getSession());
+        $info = $session->getInspector()->getSchemas();
         $this->formatOutput($output, $info);
 
         return 0;
@@ -66,11 +71,11 @@ class InspectDatabase extends SessionAwareCommand
      * Format command output from the inspector's result.
      *
      * @access protected
-     * @param  OutputInterface  $output
-     * @param  ResultIterator   $iterator
-     * @return null
+     * @param OutputInterface $output
+     * @param ResultIterator $iterator
+     * @return void
      */
-    protected function formatOutput(OutputInterface $output, ResultIterator $iterator)
+    protected function formatOutput(OutputInterface $output, ResultIterator $iterator): void
     {
         $output->writeln(
             sprintf(

@@ -11,6 +11,7 @@ namespace PommProject\Cli\Command;
 
 use PommProject\Cli\Exception\CliException;
 use PommProject\Foundation\ConvertedResultIterator;
+use PommProject\Foundation\Exception\FoundationException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,14 +30,14 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class InspectRelation extends RelationAwareCommand
 {
-    protected $relation_oid;
+    protected ?int $relation_oid = null;
 
     /**
      * configure
      *
      * @see Command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('pomm:inspect:relation')
@@ -48,14 +49,20 @@ class InspectRelation extends RelationAwareCommand
     /**
      * execute
      *
-     * @see Command
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
      * @throws CliException
+     * @throws FoundationException
+     * @see Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         parent::execute($input, $output);
         $this->relation = $input->getArgument('relation');
-        $this->relation_oid = $this->getSession()
+
+        $session = $this->mustBeModelManagerSession($this->getSession());
+        $this->relation_oid = $session
             ->getInspector()
             ->getTableOid($this->schema, $this->relation)
             ;
@@ -70,7 +77,7 @@ class InspectRelation extends RelationAwareCommand
             );
         }
 
-        $fields_infos = $this->getSession()
+        $fields_infos = $session
             ->getInspector()
             ->getTableFieldInformation($this->relation_oid)
             ;
@@ -88,9 +95,8 @@ class InspectRelation extends RelationAwareCommand
      * @access protected
      * @param  OutputInterface         $output
      * @param  ConvertedResultIterator $fields_infos
-     * @return void
      */
-    protected function formatOutput(OutputInterface $output, ConvertedResultIterator $fields_infos)
+    protected function formatOutput(OutputInterface $output, ConvertedResultIterator $fields_infos): void
     {
         $output->writeln(sprintf("Relation <fg=cyan>%s.%s</fg=cyan>", $this->schema, $this->relation));
         $table = (new Table($output))
@@ -105,7 +111,7 @@ class InspectRelation extends RelationAwareCommand
                     $this->formatType($info['type']),
                     $info['default'],
                     $info['is_notnull'] ? 'yes' : 'no',
-                    wordwrap($info['comment']),
+                    !is_null($info['comment']) ? wordwrap($info['comment']) : '',
                 ]
             );
         }
@@ -119,10 +125,10 @@ class InspectRelation extends RelationAwareCommand
      * Format type.
      *
      * @access protected
-     * @param  string $type
+     * @param string $type
      * @return string
      */
-    protected function formatType($type)
+    protected function formatType(string $type): string
     {
         if (preg_match('/^(?:(.*)\.)?_(.*)$/', $type, $matches)) {
             if ($matches[1] !== '') {

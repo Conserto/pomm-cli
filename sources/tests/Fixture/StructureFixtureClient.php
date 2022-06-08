@@ -15,17 +15,17 @@ use PommProject\Foundation\Session\Session;
 
 class StructureFixtureClient extends Client
 {
-    public function getClientType()
+    public function getClientType(): string
     {
         return 'fixture';
     }
 
-    public function getClientIdentifier()
+    public function getClientIdentifier(): string
     {
-        return get_class($this);
+        return $this::class;
     }
 
-    public function initialize(Session $session)
+    public function initialize(Session $session): void
     {
         parent::initialize($session);
         $sql = [
@@ -52,13 +52,13 @@ class StructureFixtureClient extends Client
         }
     }
 
-    public function shutdown()
+    public function shutdown(): void
     {
         $sql = 'drop schema pomm_test cascade';
         $this->executeSql($sql);
     }
 
-    protected function executeSql($sql)
+    protected function executeSql($sql): void
     {
         $this
             ->getSession()

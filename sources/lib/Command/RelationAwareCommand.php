@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace PommProject\Cli\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -28,22 +29,21 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 abstract class RelationAwareCommand extends SchemaAwareCommand
 {
-    protected $relation;
+    protected mixed $relation;
 
     /**
      * configure
      *
      * @see PommAwareCommand
      */
-    protected function configureRequiredArguments()
+    protected function configureRequiredArguments(): RelationAwareCommand
     {
         parent::configureRequiredArguments()
             ->addArgument(
                 'relation',
                 InputArgument::REQUIRED,
                 'Relation to inspect.'
-            )
-            ;
+            );
 
         return $this;
     }
@@ -53,10 +53,11 @@ abstract class RelationAwareCommand extends SchemaAwareCommand
      *
      * @see Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int|null
     {
         parent::execute($input, $output);
         $this->relation = $input->getArgument('relation');
+        return null;
     }
 
     /**
@@ -65,28 +66,22 @@ abstract class RelationAwareCommand extends SchemaAwareCommand
      * Add ModelManager output lines to the CLI output.
      *
      * @access protected
-     * @param  OutputInterface  $output
-     * @param  array            $lines
+     * @param OutputInterface $output
+     * @param array $lines
      * @return RelationAwareCommand
      */
-    protected function updateOutput(OutputInterface $output, array $lines = [])
+    protected function updateOutput(OutputInterface $output, array $lines = []): RelationAwareCommand
     {
         foreach ($lines as $line) {
             $status = $line["status"] == "ok" ? "<fg=green>✓</fg=green>" : "<fg=red>✗</fg=red>";
 
-            switch ($line['operation']) {
-            case "creating":
-                $operation = sprintf("<fg=green>%s</fg=green>", ucwords($line['operation']));
-                break;
-            case "overwriting":
-                $operation = sprintf("<fg=cyan>%s</fg=cyan>", ucwords($line['operation']));
-                break;
-            case "deleting":
-                $operation = sprintf("<fg=red>%s</fg=red>", ucwords($line['operation']));
-                break;
-            default:
-                $operation = ucwords($line['operation']);
-            }
+            $operation = match ($line['operation']) {
+                "creating" => sprintf("<fg=green>%s</fg=green>", ucwords($line['operation'])),
+                "overwriting" => sprintf("<fg=cyan>%s</fg=cyan>", ucwords($line['operation'])),
+                "deleting" => sprintf("<fg=red>%s</fg=red>", ucwords($line['operation'])),
+                default => ucwords($line['operation']),
+            };
+
 
             $output->writeln(
                 sprintf(

@@ -9,6 +9,9 @@
  */
 namespace PommProject\Cli\Command;
 
+use PommProject\Cli\Exception\CliException;
+use PommProject\Cli\Exception\GeneratorException;
+use PommProject\Foundation\Exception\FoundationException;
 use PommProject\Foundation\ResultIterator;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,7 +35,7 @@ class InspectSchema extends SchemaAwareCommand
      *
      * @see Command
      */
-    public function configure()
+    public function configure(): void
     {
         $this
             ->setName('pomm:inspect:schema')
@@ -41,17 +44,24 @@ class InspectSchema extends SchemaAwareCommand
 
         parent::configure();
     }
+
     /**
      * execute
      *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     * @throws CliException
+     * @throws GeneratorException
+     * @throws FoundationException
      * @see Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         parent::execute($input, $output);
 
-        $info = $this
-            ->getSession()
+        $session = $this->mustBeModelManagerSession($this->getSession());
+        $info = $session
             ->getInspector()
             ->getSchemaRelations($this->fetchSchemaOid()
         );
@@ -68,9 +78,8 @@ class InspectSchema extends SchemaAwareCommand
      * @access protected
      * @param  OutputInterface $output
      * @param  ResultIterator  $info
-     * @return void
      */
-    protected function formatOutput(OutputInterface $output, ResultIterator $info)
+    protected function formatOutput(OutputInterface $output, ResultIterator $info): void
     {
         $output->writeln(
             sprintf(
@@ -88,7 +97,7 @@ class InspectSchema extends SchemaAwareCommand
                 sprintf("<fg=yellow>%s</fg=yellow>", $table_info['name']),
                 $table_info['type'],
                 $table_info['oid'],
-                wordwrap($table_info['comment'])
+                !is_null($table_info['comment']) ? wordwrap($table_info['comment']) : '',
             ]);
         }
 

@@ -9,6 +9,9 @@
  */
 namespace PommProject\Cli\Command;
 
+use PommProject\Cli\Exception\CliException;
+use PommProject\Cli\Exception\GeneratorException;
+use PommProject\Foundation\Exception\FoundationException;
 use PommProject\Foundation\ParameterHolder;
 use PommProject\ModelManager\Generator\EntityGenerator;
 use PommProject\ModelManager\Generator\ModelGenerator;
@@ -37,7 +40,7 @@ class GenerateForRelation extends RelationAwareCommand
      *
      * @see Command
      */
-    public function configure()
+    public function configure(): void
     {
         $this
             ->setName('pomm:generate:relation-all')
@@ -63,9 +66,16 @@ class GenerateForRelation extends RelationAwareCommand
     /**
      * execute
      *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     * @throws CliException
+     * @throws GeneratorException
+     * @throws FoundationException
+     * @throws \PommProject\ModelManager\Exception\GeneratorException
      * @see Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         parent::execute($input, $output);
 
@@ -128,7 +138,7 @@ class GenerateForRelation extends RelationAwareCommand
      * @param  string          $pathFile
      * @param  null|string     $file_type
      */
-    private function writelnSkipFile(OutputInterface $output, $pathFile, $file_type = null)
+    private function writelnSkipFile(OutputInterface $output, string $pathFile, ?string $file_type = null): void
     {
         $file_type = $file_type === null ? '' : sprintf("%s ", $file_type);
 

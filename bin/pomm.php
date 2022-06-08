@@ -21,11 +21,12 @@ use PommProject\Cli\Command\GenerateEntity;
 use PommProject\Cli\Command\GenerateForRelation;
 use PommProject\Cli\Command\GenerateForSchema;
 
-function includeIfExists($file)
+function includeIfExists(string $file): mixed
 {
     if (file_exists($file)) {
         return include $file;
     }
+    return null;
 }
 
 if (

@@ -67,7 +67,7 @@ class InspectRelation extends ModelSessionAtoum
                     );
                 }
             )
-            ->isInstanceOf('\PommProject\Cli\Exception\CliException')
+            ->isInstanceOf(\PommProject\Cli\Exception\CliException::class)
             ;
     }
 }
