@@ -1,33 +1,22 @@
 {
-    "name": "pomm-project/cli",
+    "name": "conserto/pomm-cli",
     "type": "library",
     "description":  "Command line for Pomm.",
     "keywords": ["cli", "postgresql", "database", "pomm"],
     "homepage": "http://www.pomm-project.org",
     "license":  "MIT",
     "authors":  [ { "name": "Grégoire HUBERT", "email": "hubert.greg@gmail.com", "homepage": "http://www.pomm-project.org" } ],
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../Foundation"
-        },
-        {
-            "type": "path",
-            "url": "../ModelManager"
-        }
-    ],
     "require": {
         "php": ">=8.1",
         "ext-pgsql": "*",
         "psr/log": "~1.0",
-        "pomm-project/foundation":    "dev-php_8_1",
-        "pomm-project/model-manager":  "dev-php_8_1",
+        "conserto/pomm-foundation":    "dev-main",
+        "conserto/pomm-model-manager":  "dev-upgrade_php_8_1",
         "symfony/console":            "~6.0"
     },
     "require-dev": {
         "atoum/atoum":        "^4.0",
         "symfony/filesystem": "~6.0",
-        "rector/rector": "^0.13.4",
         "phpstan/phpstan": "^1.7"
     },
     "autoload": {
