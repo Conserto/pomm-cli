@@ -66,6 +66,7 @@ HELP
      * @throws CliException
      * @throws GeneratorException
      * @throws FoundationException
+     * @throws \PommProject\ModelManager\Exception\GeneratorException
      * @see Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int

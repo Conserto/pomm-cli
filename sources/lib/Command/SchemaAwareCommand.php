@@ -12,6 +12,7 @@ namespace PommProject\Cli\Command;
 use PommProject\Cli\Exception\CliException;
 use PommProject\Foundation\Exception\FoundationException;
 use PommProject\Foundation\Inflector;
+use PommProject\ModelManager\Model\FlexibleEntity;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -85,7 +86,7 @@ abstract class SchemaAwareCommand extends SessionAwareCommand
                 null,
                 InputOption::VALUE_REQUIRED,
                 'Use an alternative flexible entity container',
-                \PommProject\ModelManager\Model\FlexibleEntity::class
+                FlexibleEntity::class
             )
         ;
 
@@ -126,7 +127,7 @@ abstract class SchemaAwareCommand extends SessionAwareCommand
      */
     protected function getPathFile(string $config_name, string $file_name, ?string $file_suffix = '', ?string $extra_dir = '', ?bool $format_psr4 = null): string
     {
-        $format_psr4 = $format_psr4 === null ? false : (bool) $format_psr4;
+        $format_psr4 = $format_psr4 === null ? false : $format_psr4;
         $prefix_ns = "";
 
         if (!$format_psr4) {

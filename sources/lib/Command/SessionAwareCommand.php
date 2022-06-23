@@ -14,6 +14,7 @@ use PommProject\Cli\Exception\GeneratorException;
 use PommProject\Foundation\Exception\FoundationException as FoundationExceptionAlias;
 use PommProject\Foundation\Inspector\InspectorPooler;
 use PommProject\Foundation\Session\Session;
+use PommProject\ModelManager\Session as ModelManagerSession;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -102,12 +103,12 @@ class SessionAwareCommand extends PommAwareCommand
      *
      * @access protected
      * @param Session $session
-     * @return \PommProject\ModelManager\Session
+     * @return ModelManagerSession
      * @throws GeneratorException
      */
-    protected function mustBeModelManagerSession(Session $session): \PommProject\ModelManager\Session
+    protected function mustBeModelManagerSession(Session $session): ModelManagerSession
     {
-        if (!$session instanceof \PommProject\ModelManager\Session) {
+        if (!$session instanceof ModelManagerSession) {
             throw new GeneratorException(
                 sprintf(
                     "To generate models, you should use a '\PommProject\ModelManager\Session session' ('%s' used).",

@@ -116,7 +116,7 @@ class PommAwareCommand extends Command
             $this->pomm = require $this->config_file;
 
             if (!$this->pomm instanceof Pomm) {
-                throw new CliException(sprintf("Invalid configuration. Bootstrap file must return a Pomm instance."));
+                throw new CliException("Invalid configuration. Bootstrap file must return a Pomm instance.");
             }
         }
 

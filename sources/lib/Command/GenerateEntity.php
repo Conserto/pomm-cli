@@ -9,6 +9,9 @@
  */
 namespace PommProject\Cli\Command;
 
+use PommProject\Cli\Exception\CliException;
+use PommProject\Cli\Exception\GeneratorException;
+use PommProject\Foundation\Exception\FoundationException;
 use PommProject\Foundation\ParameterHolder;
 use PommProject\ModelManager\Generator\EntityGenerator;
 use Symfony\Component\Console\Command\Command;
@@ -80,6 +83,13 @@ HELP
     /**
      * execute
      *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     * @throws CliException
+     * @throws GeneratorException
+     * @throws FoundationException
+     * @throws \PommProject\ModelManager\Exception\GeneratorException
      * @see Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
