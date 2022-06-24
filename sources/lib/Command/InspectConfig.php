@@ -9,6 +9,7 @@
  */
 namespace PommProject\Cli\Command;
 
+use PommProject\Cli\Exception\CliException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -31,7 +32,7 @@ class InspectConfig extends PommAwareCommand
      *
      * @see command
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName("pomm:inspect:config")
@@ -46,9 +47,10 @@ class InspectConfig extends PommAwareCommand
      *
      * Set pomm dependent variables.
      *
+     * @throws CliException
      * @see Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         parent::execute($input, $output);
 
@@ -75,11 +77,12 @@ class InspectConfig extends PommAwareCommand
      * Add list of builders to output.
      *
      * @access private
-     * @param  OutputInterface  $output
-     * @param  array            $results
-     * @return InspectConfig    $this
+     * @param OutputInterface $output
+     * @param array $results
+     * @return void
+     * @throws CliException
      */
-    private function showResultList(OutputInterface $output, array $results)
+    private function showResultList(OutputInterface $output, array $results): void
     {
         foreach ($results as $name) {
             $output->writeln(
@@ -93,6 +96,5 @@ class InspectConfig extends PommAwareCommand
             );
         }
 
-        return $this;
     }
 }

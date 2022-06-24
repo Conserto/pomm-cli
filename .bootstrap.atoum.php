@@ -9,6 +9,6 @@ if (file_exists($file)) {
     require $file;
 } else {
     // we are using travis configuration by default
-    require PROJECT_DIR.'/sources/tests/config.travis.php';
+    require PROJECT_DIR.'/sources/tests/config.github.php';
 }
 

@@ -10,7 +10,9 @@
 namespace PommProject\Cli\Command;
 
 use PommProject\Cli\Exception\CliException;
+use PommProject\Foundation\Exception\FoundationException;
 use PommProject\Foundation\Inflector;
+use PommProject\ModelManager\Model\FlexibleEntity;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -31,19 +33,19 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 abstract class SchemaAwareCommand extends SessionAwareCommand
 {
-    protected $schema;
-    protected $prefix_dir;
-    protected $prefix_ns;
-    protected $pathFile;
-    protected $namespace;
-    protected $flexible_container;
+    protected ?string $schema;
+    protected ?string $prefix_dir;
+    protected ?string $prefix_ns;
+    protected ?string $pathFile;
+    protected ?string $namespace;
+    protected ?string $flexible_container;
 
     /**
      * configure
      *
      * @see PommAwareCommand
      */
-    protected function configureRequiredArguments()
+    protected function configureRequiredArguments(): SchemaAwareCommand
     {
         parent::configureRequiredArguments()
             ->addOption(
@@ -70,7 +72,7 @@ abstract class SchemaAwareCommand extends SessionAwareCommand
      *
      * @see PommAwareCommand
      */
-    protected function configureOptionals()
+    protected function configureOptionals(): SchemaAwareCommand
     {
         parent::configureOptionals()
             ->addArgument(
@@ -84,7 +86,7 @@ abstract class SchemaAwareCommand extends SessionAwareCommand
                 null,
                 InputOption::VALUE_REQUIRED,
                 'Use an alternative flexible entity container',
-                'PommProject\ModelManager\Model\FlexibleEntity'
+                FlexibleEntity::class
             )
         ;
 
@@ -95,7 +97,7 @@ abstract class SchemaAwareCommand extends SessionAwareCommand
      *
      * @see Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         parent::execute($input, $output);
         $this->schema   = $input->getArgument('schema');
@@ -107,6 +109,7 @@ abstract class SchemaAwareCommand extends SessionAwareCommand
         $this->prefix_dir = $input->getOption('prefix-dir');
         $this->prefix_ns  = $input->getOption('prefix-ns');
         $this->flexible_container = $input->getOption('flexible-container');
+        return 0;
     }
 
     /**
@@ -115,22 +118,20 @@ abstract class SchemaAwareCommand extends SessionAwareCommand
      * Create path file from parameters and namespace.
      *
      * @access protected
-     * @param  string $config_name
-     * @param  string $file_suffix
-     * @param  string $extra_dir
-     * @param  string $file_name
-     * @param  bool   $format_psr4
+     * @param string $config_name
+     * @param string $file_name
+     * @param  ?string $file_suffix
+     * @param string|null $extra_dir
+     * @param bool $format_psr4
      * @return string
      */
-    protected function getPathFile($config_name, $file_name, $file_suffix = '', $extra_dir = '', $format_psr4 = null)
+    protected function getPathFile(string $config_name, string $file_name, ?string $file_suffix = '', ?string $extra_dir = '', bool $format_psr4 = false): string
     {
-        $format_psr4 = $format_psr4 === null ? false : (bool) $format_psr4;
         $prefix_ns = "";
 
         if (!$format_psr4) {
             $prefix_ns = str_replace('\\', '/', trim($this->prefix_ns, '\\'));
         }
-
         $elements =
             [
                 rtrim($this->prefix_dir, '/'),
@@ -141,7 +142,7 @@ abstract class SchemaAwareCommand extends SessionAwareCommand
                 sprintf("%s%s.php", Inflector::studlyCaps($file_name), $file_suffix)
             ];
 
-        return join('/', array_filter($elements, function ($val) { return $val != null; }));
+        return join(DIRECTORY_SEPARATOR, array_filter($elements, fn($val) => $val != null));
     }
 
     /**
@@ -154,7 +155,7 @@ abstract class SchemaAwareCommand extends SessionAwareCommand
      * @param  string $extra_ns
      * @return string
      */
-    protected function getNamespace($config_name, $extra_ns = '')
+    protected function getNamespace(string $config_name, string $extra_ns = ''): string
     {
         $elements =
             [
@@ -164,7 +165,7 @@ abstract class SchemaAwareCommand extends SessionAwareCommand
                 $extra_ns
             ];
 
-        return join('\\', array_filter($elements, function ($val) { return $val != null; }));
+        return join('\\', array_filter($elements, fn($val) => $val != null));
     }
 
     /**
@@ -174,12 +175,12 @@ abstract class SchemaAwareCommand extends SessionAwareCommand
      *
      * @access protected
      * @return int $oid
-     * @throws CliException
+     * @throws CliException|FoundationException
      */
-    protected function fetchSchemaOid()
+    protected function fetchSchemaOid(): int
     {
-        $schema_oid = $this
-            ->getSession()
+        $session = $this->mustBeModelManagerSession($this->getSession());
+        $schema_oid = $session
             ->getInspector()
             ->getSchemaOid($this->schema)
             ;

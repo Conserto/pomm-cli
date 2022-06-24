@@ -9,6 +9,9 @@
  */
 namespace PommProject\Cli\Command;
 
+use PommProject\Cli\Exception\CliException;
+use PommProject\Cli\Exception\GeneratorException;
+use PommProject\Foundation\Exception\FoundationException;
 use PommProject\Foundation\ParameterHolder;
 use PommProject\ModelManager\Generator\ModelGenerator;
 use Symfony\Component\Console\Command\Command;
@@ -34,7 +37,7 @@ class GenerateRelationModel extends RelationAwareCommand
      *
      * @see Command
      */
-    public function configure()
+    public function configure(): void
     {
         $this
             ->setName('pomm:generate:model')
@@ -60,9 +63,16 @@ class GenerateRelationModel extends RelationAwareCommand
     /**
      * execute
      *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     * @throws CliException
+     * @throws GeneratorException
+     * @throws FoundationException
+     * @throws \PommProject\ModelManager\Exception\GeneratorException
      * @see Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         parent::execute($input, $output);
 

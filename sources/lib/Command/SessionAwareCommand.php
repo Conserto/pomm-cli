@@ -9,9 +9,12 @@
  */
 namespace PommProject\Cli\Command;
 
+use PommProject\Cli\Exception\CliException;
 use PommProject\Cli\Exception\GeneratorException;
+use PommProject\Foundation\Exception\FoundationException as FoundationExceptionAlias;
 use PommProject\Foundation\Inspector\InspectorPooler;
 use PommProject\Foundation\Session\Session;
+use PommProject\ModelManager\Session as ModelManagerSession;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -30,9 +33,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SessionAwareCommand extends PommAwareCommand
 {
-    private $session;
+    private ?Session $session = null;
 
-    protected $config_name;
+    protected string $config_name;
 
     /**
      * execute
@@ -41,10 +44,11 @@ class SessionAwareCommand extends PommAwareCommand
      *
      * @see Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         parent::execute($input, $output);
         $this->config_name = $input->getArgument('config-name');
+        return 0;
     }
 
     /**
@@ -54,9 +58,9 @@ class SessionAwareCommand extends PommAwareCommand
      * necessary to be able to declare base required fields before subcommands.
      *
      * @access protected
-     * @return PommAwareCommand $this
+     * @return SessionAwareCommand $this
      */
-    protected function configureRequiredArguments()
+    protected function configureRequiredArguments(): SessionAwareCommand
     {
         $this
             ->addArgument(
@@ -76,8 +80,10 @@ class SessionAwareCommand extends PommAwareCommand
      *
      * @access protected
      * @return Session
+     * @throws CliException
+     * @throws FoundationExceptionAlias
      */
-    protected function getSession()
+    protected function getSession(): Session
     {
         if ($this->session === null) {
             $this->session = $this
@@ -96,17 +102,17 @@ class SessionAwareCommand extends PommAwareCommand
      * Check if a session is a \PommProject\ModelManager\Session.
      *
      * @access protected
-     * @param  Session $session
+     * @param Session $session
+     * @return ModelManagerSession
      * @throws GeneratorException
-     * @return Session
      */
-    protected function mustBeModelManagerSession(Session $session)
+    protected function mustBeModelManagerSession(Session $session): ModelManagerSession
     {
-        if (!$session instanceof \PommProject\ModelManager\Session) {
+        if (!$session instanceof ModelManagerSession) {
             throw new GeneratorException(
                 sprintf(
                     "To generate models, you should use a '\PommProject\ModelManager\Session session' ('%s' used).",
-                    get_class($session)
+                    $session::class
                 )
             );
         }
@@ -120,10 +126,10 @@ class SessionAwareCommand extends PommAwareCommand
      * When testing, it is useful to provide directly the session to be used.
      *
      * @access public
-     * @param  Session          $session
-     * @return PommAwareCommand
+     * @param Session $session
+     * @return SessionAwareCommand
      */
-    public function setSession(Session $session)
+    public function setSession(Session $session): SessionAwareCommand
     {
         $this->session = $session;
 

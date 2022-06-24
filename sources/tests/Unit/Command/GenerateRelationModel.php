@@ -57,7 +57,7 @@ class GenerateRelationModel extends ModelSessionAtoum
             ->string(file_get_contents('tmp/Model/PommTest/PommTestSchema/BetaModel.php'))
             ->isEqualTo(file_get_contents('sources/tests/Fixture/BetaModel.php'))
             ->exception(function () use ($tester, $command, $command_args) { $tester->execute($command_args); })
-            ->isInstanceOf('\PommProject\ModelManager\Exception\GeneratorException')
+            ->isInstanceOf(\PommProject\ModelManager\Exception\GeneratorException::class)
             ->message->contains('--force')
             ;
         $tester->execute(array_merge($command_args, ['--force' => null ]), $options);
