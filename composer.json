@@ -10,8 +10,8 @@
         "php": ">=8.1",
         "ext-pgsql": "*",
         "psr/log": "~1.0",
-        "conserto/pomm-foundation":    "dev-main",
-        "conserto/pomm-model-manager":  "dev-main",
+        "conserto/pomm-foundation": "3.0.x-dev",
+        "conserto/pomm-model-manager": "3.0.x-dev",
         "symfony/console": "~5.0|~6.0"
     },
     "require-dev": {
