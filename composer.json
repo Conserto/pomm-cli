@@ -11,7 +11,7 @@
         "ext-pgsql": "*",
         "psr/log": "~1.0",
         "conserto/pomm-foundation":    "dev-main",
-        "conserto/pomm-model-manager":  "dev-upgrade_php_8_1",
+        "conserto/pomm-model-manager":  "dev-main",
         "symfony/console": "~5.0|~6.0"
     },
     "require-dev": {
