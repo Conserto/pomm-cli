@@ -40,10 +40,10 @@ class PommAwareCommand extends Command
      *
      * @see Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int|null
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->config_file = $input->getOption('bootstrap-file');
-        return null;
+        return 0;
     }
 
     /**

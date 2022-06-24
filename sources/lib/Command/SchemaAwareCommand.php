@@ -97,7 +97,7 @@ abstract class SchemaAwareCommand extends SessionAwareCommand
      *
      * @see Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int|null
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         parent::execute($input, $output);
         $this->schema   = $input->getArgument('schema');
@@ -109,7 +109,7 @@ abstract class SchemaAwareCommand extends SessionAwareCommand
         $this->prefix_dir = $input->getOption('prefix-dir');
         $this->prefix_ns  = $input->getOption('prefix-ns');
         $this->flexible_container = $input->getOption('flexible-container');
-        return null;
+        return 0;
     }
 
     /**

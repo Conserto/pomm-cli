@@ -44,11 +44,11 @@ class SessionAwareCommand extends PommAwareCommand
      *
      * @see Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int|null
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         parent::execute($input, $output);
         $this->config_name = $input->getArgument('config-name');
-        return null;
+        return 0;
     }
 
     /**

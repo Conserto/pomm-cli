@@ -53,11 +53,11 @@ abstract class RelationAwareCommand extends SchemaAwareCommand
      *
      * @see Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int|null
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         parent::execute($input, $output);
         $this->relation = $input->getArgument('relation');
-        return null;
+        return 0;
     }
 
     /**
