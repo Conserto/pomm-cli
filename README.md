@@ -1,8 +1,11 @@
 # Cli
 
-This is the Cli component for the Pomm database framework.
+This is a fork of the Cli component for the Pomm database framework.
 
-[![Latest Stable Version](https://poser.pugx.org/conserto/pomm-cli/v/stable)](https://packagist.org/packages/conserto/pomm-cli) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/conserto/pomm-cli/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/conserto/pomm-cli/?branch=master) [![Build Status](https://travis-ci.org/conserto/pomm-cli.svg)](https://travis-ci.org/conserto/pomm-cli) [![Monthly Downloads](https://poser.pugx.org/conserto/pomm-cli/d/monthly.png)](https://packagist.org/packages/conserto/pomm-cli) [![License](https://poser.pugx.org/conserto/pomm-cli/license.svg)](https://packagist.org/packages/conserto/pomm-cli)
+[![Latest Stable Version](https://poser.pugx.org/conserto/pomm-cli/v/stable)](https://packagist.org/packages/conserto/pomm-cli)
+![CI Status](https://github.com/conserto/pomm-cli/actions/workflows/ci.yml/badge.svg)
+[![Monthly Downloads](https://poser.pugx.org/conserto/pomm-cli/d/monthly.png)](https://packagist.org/packages/conserto/pomm-cli) 
+[![License](https://poser.pugx.org/conserto/pomm-cli/license.svg)](https://packagist.org/packages/conserto/pomm-cli)
 
 ## Configuration
 
