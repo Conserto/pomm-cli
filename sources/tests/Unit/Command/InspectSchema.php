@@ -18,7 +18,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class InspectSchema extends ModelSessionAtoum
 {
-    protected function initializeSession(Session $session)
+    protected function initializeSession(Session $session): void
     {
         $session
             ->registerClient(new StructureFixtureClient())

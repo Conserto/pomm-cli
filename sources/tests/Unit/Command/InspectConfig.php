@@ -16,7 +16,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class InspectConfig extends FoundationSessionAtoum
 {
-    protected function initializeSession(Session $session)
+    protected function initializeSession(Session $session): void
     {
     }
 
