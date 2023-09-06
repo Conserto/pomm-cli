@@ -50,7 +50,8 @@ class GenerateRelationModel extends ModelSessionAtoum
         $tester = new CommandTester($command);
         $options = ['decorated' => false];
         $tester->execute($command_args, $options);
-
+var_dump(file_get_contents('tmp/Model/PommTest/PommTestSchema/BetaModel.php'));
+var_dump(file_get_contents('sources/tests/Fixture/BetaModel.php'));
         $this
             ->string($tester->getDisplay())
             ->isEqualTo(" ✓  Creating file 'tmp/Model/PommTest/PommTestSchema/BetaModel.php'.".PHP_EOL)
