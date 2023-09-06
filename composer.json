@@ -1,4 +1,5 @@
 {
+    "version": "3.0.1",
     "name": "conserto/pomm-cli",
     "type": "library",
     "description":  "Command line for Pomm.",
