@@ -10,6 +10,7 @@ use Model\PommTest\PommTestSchema\AutoStructure\Beta as BetaStructure;
  * Model class for table beta.
  *
  * @see Model
+ * @extends Model<Beta>
  */
 class BetaModel extends Model
 {
@@ -18,6 +19,6 @@ class BetaModel extends Model
     public function __construct()
     {
         $this->structure = new BetaStructure;
-        $this->flexible_entity_class = Beta::class;
+        $this->flexibleEntityClass = Beta::class;
     }
 }
