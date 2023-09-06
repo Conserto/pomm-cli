@@ -24,7 +24,7 @@ class GenerateEntity extends ModelSessionAtoum
         $fs->remove('tmp');
     }
 
-    protected function initializeSession(Session $session)
+    protected function initializeSession(Session $session): void
     {
         $session
             ->registerClient(new StructureFixtureClient())
