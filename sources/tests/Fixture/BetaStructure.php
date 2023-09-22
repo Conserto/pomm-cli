@@ -10,8 +10,6 @@ namespace Model\PommTest\PommTestSchema\AutoStructure;
 use PommProject\ModelManager\Model\RowStructure;
 
 /**
- * Beta
- *
  * Structure class for relation pomm_test.beta.
  * This is the beta comment.
  *
@@ -22,13 +20,6 @@ use PommProject\ModelManager\Model\RowStructure;
  */
 class Beta extends RowStructure
 {
-    /**
-     * __construct
-     *
-     * Structure definition.
-     *
-     * @access public
-     */
     public function __construct()
     {
         $this
