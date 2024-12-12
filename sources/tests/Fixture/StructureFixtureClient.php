@@ -22,7 +22,7 @@ class StructureFixtureClient extends Client
 
     public function getClientIdentifier(): string
     {
-        return $this::class;
+        return static::class;
     }
 
     public function initialize(Session $session): void
@@ -58,7 +58,7 @@ class StructureFixtureClient extends Client
         $this->executeSql($sql);
     }
 
-    protected function executeSql($sql): void
+    protected function executeSql(string $sql): void
     {
         $this
             ->getSession()

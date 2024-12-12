@@ -14,11 +14,12 @@ use Model\PommTest\PommTestSchema\AutoStructure\Beta as BetaStructure;
  */
 class BetaModel extends Model
 {
+    /** @use WriteQueries<Beta> */
     use WriteQueries;
 
     public function __construct()
     {
-        $this->structure = new BetaStructure;
+        $this->structure = new BetaStructure();
         $this->flexibleEntityClass = Beta::class;
     }
 }

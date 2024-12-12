@@ -14,11 +14,12 @@ use Model\PommTest\PommTestSchema\AutoStructure\Pluto as PlutoStructure;
  */
 class PlutoModel extends Model
 {
+    /** @use ReadQueries<Pluto> */
     use ReadQueries;
 
     public function __construct()
     {
-        $this->structure = new PlutoStructure;
+        $this->structure = new PlutoStructure();
         $this->flexibleEntityClass = Pluto::class;
     }
 }

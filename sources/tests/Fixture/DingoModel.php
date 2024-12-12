@@ -14,11 +14,12 @@ use Model\PommTest\PommTestSchema\AutoStructure\Dingo as DingoStructure;
  */
 class DingoModel extends Model
 {
+    /** @use ReadQueries<Dingo> */
     use ReadQueries;
 
     public function __construct()
     {
-        $this->structure = new DingoStructure;
+        $this->structure = new DingoStructure();
         $this->flexibleEntityClass = Dingo::class;
     }
 }

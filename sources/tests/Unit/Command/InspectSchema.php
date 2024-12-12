@@ -25,7 +25,7 @@ class InspectSchema extends ModelSessionAtoum
             ;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $session = $this->buildSession();
         $application = new Application();
@@ -62,7 +62,7 @@ class InspectSchema extends ModelSessionAtoum
         }
 
         $this
-            ->exception(function () use ($tester, $command) {
+            ->exception(function () use ($tester, $command): void {
                     $tester->execute(
                         [
                             'command'          => $command->getName(),
