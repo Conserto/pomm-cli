@@ -5,6 +5,10 @@
  * Rector fixes
  * Dependencies update
 
+== VERSION 3.0.2
+
+ * Add sf7 dependency support
+
 == VERSION 2.0.3
 
  * Add sf5 dependency support
