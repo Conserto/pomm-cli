@@ -111,7 +111,7 @@ class InspectRelation extends RelationAwareCommand
                     $this->formatType($info['type']),
                     $info['default'],
                     $info['is_notnull'] ? 'yes' : 'no',
-                    !is_null($info['comment']) ? wordwrap($info['comment']) : '',
+                    !is_null($info['comment']) ? wordwrap((string) $info['comment']) : '',
                 ]
             );
         }

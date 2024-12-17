@@ -97,7 +97,7 @@ class InspectSchema extends SchemaAwareCommand
                 sprintf("<fg=yellow>%s</fg=yellow>", $table_info['name']),
                 $table_info['type'],
                 $table_info['oid'],
-                !is_null($table_info['comment']) ? wordwrap($table_info['comment']) : '',
+                !is_null($table_info['comment']) ? wordwrap((string) $table_info['comment']) : '',
             ]);
         }
 

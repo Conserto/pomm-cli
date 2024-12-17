@@ -24,7 +24,7 @@ class InspectRelation extends ModelSessionAtoum
             ;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $application = new Application();
         $application->add($this->newTestedInstance()->setSession($this->buildSession()));
@@ -56,7 +56,7 @@ class InspectRelation extends ModelSessionAtoum
             ]))
         ;
         $this
-            ->exception(function () use ($tester, $command) {
+            ->exception(function () use ($tester, $command): void {
                     $tester->execute(
                         [
                             'command'          => $command->getName(),

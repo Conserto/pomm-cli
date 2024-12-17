@@ -12,6 +12,7 @@ namespace PommProject\Cli\Test\Unit\Command;
 use PommProject\Cli\Test\Fixture\StructureFixtureClient;
 use PommProject\Foundation\Inspector\Inspector;
 use PommProject\Foundation\Session\Session;
+use PommProject\ModelManager\Exception\GeneratorException;
 use PommProject\ModelManager\Tester\ModelSessionAtoum;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -19,7 +20,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class GenerateRelationModel extends ModelSessionAtoum
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         $fs = new Filesystem();
         $fs->remove('tmp');
@@ -32,7 +33,7 @@ class GenerateRelationModel extends ModelSessionAtoum
             ;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $session = $this->buildSession();
         $application = new Application();
@@ -56,8 +57,8 @@ class GenerateRelationModel extends ModelSessionAtoum
             ->isEqualTo(" ✓  Creating file 'tmp/Model/PommTest/PommTestSchema/BetaModel.php'.".PHP_EOL)
             ->string(file_get_contents('tmp/Model/PommTest/PommTestSchema/BetaModel.php'))
             ->isEqualTo(file_get_contents('sources/tests/Fixture/BetaModel.php'))
-            ->exception(function () use ($tester, $command, $command_args) { $tester->execute($command_args); })
-            ->isInstanceOf(\PommProject\ModelManager\Exception\GeneratorException::class)
+            ->exception(function () use ($tester, $command, $command_args): void { $tester->execute($command_args); })
+            ->isInstanceOf(GeneratorException::class)
             ->message->contains('--force')
             ;
         $tester->execute(array_merge($command_args, ['--force' => null ]), $options);

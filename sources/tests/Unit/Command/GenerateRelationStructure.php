@@ -18,7 +18,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class GenerateRelationStructure extends ModelSessionAtoum
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         $fs = new Filesystem();
         $fs->remove('tmp');
@@ -31,7 +31,7 @@ class GenerateRelationStructure extends ModelSessionAtoum
             ;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $application = new Application();
         $application->add($this->newTestedInstance()->setSession($this->buildSession()));

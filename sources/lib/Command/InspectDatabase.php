@@ -92,7 +92,7 @@ class InspectDatabase extends SessionAwareCommand
                 sprintf("<fg=yellow>%s</fg=yellow>", $schema_info['name']),
                 $schema_info['oid'],
                 $schema_info['relations'],
-                wordwrap($schema_info['comment'])
+                wordwrap((string) $schema_info['comment'])
             ]);
         }
 

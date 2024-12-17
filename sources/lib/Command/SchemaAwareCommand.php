@@ -33,12 +33,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 abstract class SchemaAwareCommand extends SessionAwareCommand
 {
-    protected ?string $schema;
-    protected ?string $prefix_dir;
-    protected ?string $prefix_ns;
-    protected ?string $pathFile;
-    protected ?string $namespace;
-    protected ?string $flexible_container;
+    protected ?string $schema = null;
+    protected ?string $prefix_dir = null;
+    protected ?string $prefix_ns = null;
+    protected ?string $pathFile = null;
+    protected ?string $namespace = null;
+    protected ?string $flexible_container = null;
 
     /**
      * configure
@@ -130,11 +130,11 @@ abstract class SchemaAwareCommand extends SessionAwareCommand
         $prefix_ns = "";
 
         if (!$format_psr4) {
-            $prefix_ns = str_replace('\\', '/', trim($this->prefix_ns, '\\'));
+            $prefix_ns = str_replace('\\', '/', trim((string) $this->prefix_ns, '\\'));
         }
         $elements =
             [
-                rtrim($this->prefix_dir, '/'),
+                rtrim((string) $this->prefix_dir, '/'),
                 $prefix_ns,
                 Inflector::studlyCaps($config_name),
                 Inflector::studlyCaps(sprintf("%s_schema", $this->schema)),
@@ -142,7 +142,10 @@ abstract class SchemaAwareCommand extends SessionAwareCommand
                 sprintf("%s%s.php", Inflector::studlyCaps($file_name), $file_suffix)
             ];
 
-        return join(DIRECTORY_SEPARATOR, array_filter($elements, fn($val) => $val != null));
+        return implode(
+            DIRECTORY_SEPARATOR,
+            array_filter($elements, fn(array|string|null $val): bool => $val != null)
+        );
     }
 
     /**
@@ -165,7 +168,7 @@ abstract class SchemaAwareCommand extends SessionAwareCommand
                 $extra_ns
             ];
 
-        return join('\\', array_filter($elements, fn($val) => $val != null));
+        return implode('\\', array_filter($elements, fn(null|string $val): bool => $val != null));
     }
 
     /**

@@ -79,7 +79,7 @@ abstract class RelationAwareCommand extends SchemaAwareCommand
                 "creating" => sprintf("<fg=green>%s</fg=green>", ucwords($line['operation'])),
                 "overwriting" => sprintf("<fg=cyan>%s</fg=cyan>", ucwords($line['operation'])),
                 "deleting" => sprintf("<fg=red>%s</fg=red>", ucwords($line['operation'])),
-                default => ucwords($line['operation']),
+                default => ucwords((string) $line['operation']),
             };
 
 

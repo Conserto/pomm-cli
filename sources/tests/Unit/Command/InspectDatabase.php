@@ -24,7 +24,7 @@ class InspectDatabase extends ModelSessionAtoum
             ;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $application = new Application();
         $application->add($this->newTestedInstance()->setSession($this->buildSession()));

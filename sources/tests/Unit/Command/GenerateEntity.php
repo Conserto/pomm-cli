@@ -18,7 +18,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class GenerateEntity extends ModelSessionAtoum
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         $fs = new Filesystem();
         $fs->remove('tmp');
@@ -31,7 +31,7 @@ class GenerateEntity extends ModelSessionAtoum
             ;
     }
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $application = new Application();
         $application->add($this->newTestedInstance()->setSession($this->buildSession()));
@@ -54,7 +54,7 @@ class GenerateEntity extends ModelSessionAtoum
             ->isEqualTo(" ✓  Creating file 'tmp/Model/PommTest/PommTestSchema/Alpha.php'.".PHP_EOL)
             ->string(file_get_contents('tmp/Model/PommTest/PommTestSchema/Alpha.php'))
             ->isEqualTo(file_get_contents('sources/tests/Fixture/AlphaEntity.php'))
-            ->exception(function () use ($tester, $command, $command_args) { $tester->execute($command_args); })
+            ->exception(function () use ($tester, $command, $command_args): void { $tester->execute($command_args); })
             ->isInstanceOf(\PommProject\ModelManager\Exception\GeneratorException::class)
             ->message->contains('--force')
             ;
