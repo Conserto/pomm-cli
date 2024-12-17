@@ -23,7 +23,7 @@ class InspectConfig extends FoundationSessionAtoum
 
     private function getPommMock(int $nb_builder = 0): Pomm
     {
-        $pomm_mock = new Pomm;
+        $pomm_mock = new Pomm();
 
         $pomm_mock->getMockController()->getSessionBuilders = function () use ($nb_builder): array {
             $builders = [];
@@ -35,7 +35,7 @@ class InspectConfig extends FoundationSessionAtoum
             return $builders;
         };
 
-        $pomm_mock->getMockController()->isDefaultSession = (fn($name): bool => $name == "my_db0");
+        $pomm_mock->getMockController()->isDefaultSession = (fn(string $name): bool => $name === "my_db0");
 
         return $pomm_mock;
     }
@@ -43,7 +43,7 @@ class InspectConfig extends FoundationSessionAtoum
     private function getCommandTester(int $nb_builder = 0): CommandTester
     {
         $application = new Application();
-        $application->add((new $this->newTestedInstance())->setPomm($this->getPommMock($nb_builder)));
+        $application->add(new $this->newTestedInstance()->setPomm($this->getPommMock($nb_builder)));
         $command = $application->find('pomm:inspect:config');
         $tester = new CommandTester($command);
         $tester->execute(

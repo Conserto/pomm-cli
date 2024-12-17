@@ -142,7 +142,10 @@ abstract class SchemaAwareCommand extends SessionAwareCommand
                 sprintf("%s%s.php", Inflector::studlyCaps($file_name), $file_suffix)
             ];
 
-        return join(DIRECTORY_SEPARATOR, array_filter($elements, fn($val): bool => $val != null));
+        return implode(
+            DIRECTORY_SEPARATOR,
+            array_filter($elements, fn(array|string|null $val): bool => $val != null)
+        );
     }
 
     /**
@@ -165,7 +168,7 @@ abstract class SchemaAwareCommand extends SessionAwareCommand
                 $extra_ns
             ];
 
-        return join('\\', array_filter($elements, fn($val): bool => $val != null));
+        return implode('\\', array_filter($elements, fn(null|string $val): bool => $val != null));
     }
 
     /**
