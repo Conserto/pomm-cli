@@ -9,6 +9,7 @@
  */
 namespace PommProject\Cli\Test\Unit\Command;
 
+use mock\PommProject\Foundation\Pomm;
 use PommProject\Foundation\Session\Session;
 use PommProject\Foundation\Tester\FoundationSessionAtoum;
 use Symfony\Component\Console\Application;
@@ -20,9 +21,9 @@ class InspectConfig extends FoundationSessionAtoum
     {
     }
 
-    private function getPommMock(int $nb_builder = 0): \mock\PommProject\Foundation\Pomm
+    private function getPommMock(int $nb_builder = 0): Pomm
     {
-        $pomm_mock = new \mock\PommProject\Foundation\Pomm;
+        $pomm_mock = new Pomm;
 
         $pomm_mock->getMockController()->getSessionBuilders = function () use ($nb_builder): array {
             $builders = [];
@@ -39,7 +40,7 @@ class InspectConfig extends FoundationSessionAtoum
         return $pomm_mock;
     }
 
-    private function getCommandTester(int $nb_builder = 0): \Symfony\Component\Console\Tester\CommandTester
+    private function getCommandTester(int $nb_builder = 0): CommandTester
     {
         $application = new Application();
         $application->add((new $this->newTestedInstance())->setPomm($this->getPommMock($nb_builder)));
