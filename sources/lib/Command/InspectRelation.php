@@ -99,7 +99,7 @@ class InspectRelation extends RelationAwareCommand
     protected function formatOutput(OutputInterface $output, ConvertedResultIterator $fields_infos): void
     {
         $output->writeln(sprintf("Relation <fg=cyan>%s.%s</fg=cyan>", $this->schema, $this->relation));
-        $table = (new Table($output))
+        $table = new Table($output)
             ->setHeaders(['pk', 'name', 'type', 'default', 'notnull', 'comment'])
             ;
 

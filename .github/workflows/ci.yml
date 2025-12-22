@@ -23,6 +23,7 @@ jobs:
       fail-fast: false
       matrix:
         php-version: ['8.4', '8.5']
+        symfony-version: ['7.*', '8.*']
 
     services:
       # Label used to access the service container
@@ -58,6 +59,7 @@ jobs:
           psql -c 'CREATE DATABASE pomm_test' -U postgres -h 127.0.0.1 postgres
           psql -c 'CREATE EXTENSION hstore' -U postgres -h 127.0.0.1 pomm_test
           psql -c 'CREATE EXTENSION ltree' -U postgres  -h 127.0.0.1 pomm_test
+          composer require "symfony/console:${{ matrix.symfony-version }}" "symfony/filesystem:${{ matrix.symfony-version }}" --dev --no-update
           composer install --dev
           cp sources/tests/config.github.php sources/tests/config.php
 

@@ -27,7 +27,7 @@ class InspectDatabase extends ModelSessionAtoum
     public function testExecute(): void
     {
         $application = new Application();
-        $application->add($this->newTestedInstance()->setSession($this->buildSession()));
+        $application->addCommand($this->newTestedInstance()->setSession($this->buildSession()));
         $command = $application->find('pomm:inspect:database');
         $tester = new CommandTester($command);
         $tester->execute(

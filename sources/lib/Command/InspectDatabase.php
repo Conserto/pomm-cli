@@ -83,7 +83,7 @@ class InspectDatabase extends SessionAwareCommand
                 $iterator->count()
             )
         );
-        $table = (new Table($output))
+        $table = new Table($output)
             ->setHeaders(['name', 'oid ', 'relations', 'comment'])
             ;
 

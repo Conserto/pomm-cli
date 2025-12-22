@@ -37,7 +37,7 @@ class GenerateRelationModel extends ModelSessionAtoum
     {
         $session = $this->buildSession();
         $application = new Application();
-        $application->add($this->newTestedInstance()->setSession($session));
+        $application->addCommand($this->newTestedInstance()->setSession($session));
         $command = $application->find('pomm:generate:model');
         $command_args =
             [
