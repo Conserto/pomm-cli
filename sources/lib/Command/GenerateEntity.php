@@ -103,14 +103,14 @@ HELP
 
         $this->updateOutput(
             $output,
-            (new EntityGenerator(
+            new EntityGenerator(
                 $session,
                 $this->schema,
                 $this->relation,
                 $this->pathFile,
                 $this->namespace,
                 $this->flexible_container
-            ))->generate(new ParameterHolder(['force' => $input->getOption('force')]))
+            )->generate(new ParameterHolder(['force' => $input->getOption('force')]))
         );
 
         return 0;

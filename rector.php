@@ -7,7 +7,6 @@ use Rector\Php81\Rector\ClassMethod\NewInInitializerRector;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
-use Rector\Symfony\Set\SymfonySetList;
 use Rector\ValueObject\PhpVersion;
 
 return RectorConfig::configure()
@@ -16,11 +15,9 @@ return RectorConfig::configure()
     ->withSets([
         SetList::TYPE_DECLARATION,
         LevelSetList::UP_TO_PHP_84,
-        SymfonySetList::SYMFONY_71,
-        SymfonySetList::SYMFONY_CODE_QUALITY,
-        SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
     ])
     ->withSkip([
         AddOverrideAttributeToOverriddenMethodsRector::class,
         NewInInitializerRector::class, // Non compatible avec Atoum
-    ]);
+    ])
+    ->withComposerBased(symfony: true);

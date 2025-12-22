@@ -41,13 +41,13 @@ if (
 }
 
 $application = new Application('pomm', 'NextGen early-dev');
-$application->add(new InspectConfig);
-$application->add(new InspectDatabase);
-$application->add(new InspectSchema);
-$application->add(new InspectRelation);
-$application->add(new GenerateRelationStructure);
-$application->add(new GenerateRelationModel);
-$application->add(new GenerateEntity);
-$application->add(new GenerateForRelation);
-$application->add(new GenerateForSchema);
+$application->addCommand(new InspectConfig);
+$application->addCommand(new InspectDatabase);
+$application->addCommand(new InspectSchema);
+$application->addCommand(new InspectRelation);
+$application->addCommand(new GenerateRelationStructure);
+$application->addCommand(new GenerateRelationModel);
+$application->addCommand(new GenerateEntity);
+$application->addCommand(new GenerateForRelation);
+$application->addCommand(new GenerateForSchema);
 $application->run();
