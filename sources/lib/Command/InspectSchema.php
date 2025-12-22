@@ -88,7 +88,7 @@ class InspectSchema extends SchemaAwareCommand
                 $this->schema
             )
         );
-        $table = (new Table($output))
+        $table = new Table($output)
             ->setHeaders(['name', 'type', 'oid ', 'comment'])
             ;
 

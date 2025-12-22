@@ -83,26 +83,26 @@ class GenerateForRelation extends RelationAwareCommand
 
         $this->updateOutput(
             $output,
-            (new StructureGenerator(
+            new StructureGenerator(
                 $session,
                 $this->schema,
                 $this->relation,
                 $this->getPathFile($input->getArgument('config-name'), $this->relation, null, 'AutoStructure', $input->getOption('psr4')),
                 $this->getNamespace($input->getArgument('config-name'), 'AutoStructure')
-            ))->generate(new ParameterHolder(array_merge($input->getArguments(), $input->getOptions())))
+            )->generate(new ParameterHolder(array_merge($input->getArguments(), $input->getOptions())))
         );
 
         $pathFile = $this->getPathFile($input->getArgument('config-name'), $this->relation, 'Model', '', $input->getOption('psr4'));
         if (!file_exists($pathFile) || $input->getOption('force')) {
             $this->updateOutput(
                 $output,
-                (new ModelGenerator(
+                new ModelGenerator(
                     $session,
                     $this->schema,
                     $this->relation,
                     $pathFile,
                     $this->getNamespace($input->getArgument('config-name'))
-                ))->generate(new ParameterHolder(array_merge($input->getArguments(), $input->getOptions())))
+                )->generate(new ParameterHolder(array_merge($input->getArguments(), $input->getOptions())))
             );
         } elseif ($output->isVerbose()) {
             $this->writelnSkipFile($output, $pathFile, 'model');
@@ -112,14 +112,14 @@ class GenerateForRelation extends RelationAwareCommand
         if (!file_exists($pathFile) || $input->getOption('force')) {
             $this->updateOutput(
                 $output,
-                (new EntityGenerator(
+                new EntityGenerator(
                     $session,
                     $this->schema,
                     $this->relation,
                     $pathFile,
                     $this->getNamespace($input->getArgument('config-name')),
                     $this->flexible_container
-                ))->generate(new ParameterHolder(array_merge($input->getArguments(), $input->getOptions())))
+                )->generate(new ParameterHolder(array_merge($input->getArguments(), $input->getOptions())))
             );
         } elseif ($output->isVerbose()) {
             $this->writelnSkipFile($output, $pathFile, 'entity');

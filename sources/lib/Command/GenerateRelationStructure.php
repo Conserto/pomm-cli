@@ -80,13 +80,13 @@ HELP
 
         $this->updateOutput(
             $output,
-            (new StructureGenerator(
+            new StructureGenerator(
                 $session,
                 $this->schema,
                 $this->relation,
                 $this->pathFile,
                 $this->namespace
-            ))->generate(new ParameterHolder())
+            )->generate(new ParameterHolder())
         );
 
         return 0;

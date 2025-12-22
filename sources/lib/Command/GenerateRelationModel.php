@@ -83,13 +83,13 @@ class GenerateRelationModel extends RelationAwareCommand
 
         $this->updateOutput(
             $output,
-            (new ModelGenerator(
+            new ModelGenerator(
                 $session,
                 $this->schema,
                 $this->relation,
                 $this->pathFile,
                 $this->namespace
-            ))->generate(new ParameterHolder(['force' => $input->getOption('force')]))
+            )->generate(new ParameterHolder(['force' => $input->getOption('force')]))
         );
 
         return 0;

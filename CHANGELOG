@@ -1,5 +1,9 @@
 == VERSION 4.0.1
 
+ * Add Symfony 8 compatibility
+
+== VERSION 4.0.1
+
  * Add CI tests for PHP version : 8.5
 
 == VERSION 4.0.0

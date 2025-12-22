@@ -43,7 +43,7 @@ class InspectConfig extends FoundationSessionAtoum
     private function getCommandTester(int $nb_builder = 0): CommandTester
     {
         $application = new Application();
-        $application->add(new $this->newTestedInstance()->setPomm($this->getPommMock($nb_builder)));
+        $application->addCommand(new $this->newTestedInstance()->setPomm($this->getPommMock($nb_builder)));
         $command = $application->find('pomm:inspect:config');
         $tester = new CommandTester($command);
         $tester->execute(

@@ -29,7 +29,7 @@ class InspectSchema extends ModelSessionAtoum
     {
         $session = $this->buildSession();
         $application = new Application();
-        $application->add($this->newTestedInstance()->setSession($session));
+        $application->addCommand($this->newTestedInstance()->setSession($session));
         $command = $application->find('pomm:inspect:schema');
         $tester = new CommandTester($command);
         $tester->execute(
